@@ -100,9 +100,34 @@ chatbot = autogen.AssistantAgent(
 #     llm_config=llm_config,
 # )
 assistant = autogen.AssistantAgent(name="assistant", llm_config={"api_key": ...})
-user_proxy.initiate_chat(
+# user_proxy.initiate_chat(
+#    chatbot,
+# #    message="You are tasked with using vectara querying to get enough information about the body of data by asking 2 questions",
+#    message="""vectara provides a way to query a corpus of data.
+#    It will return several answers to your query.
+#    You must use vectara to query the corpus and try to determine what the corpus is about
+#      and you must return the results that seems to make the most sense. """,
+#    llm_config=llm_config,
+# #    llm_config={"api_key": os.environ['OPENAI_API_KEY']}
+# )
+
+def user_generated_query(user_query):
+    # query = input("Enter a query: ")
+    # return query
+    user_proxy.initiate_chat(
    chatbot,
-   message="You are tasked with using vectara querying to get enough information about the body of data by asking 2 questions",
+#    message="You are tasked with using vectara querying to get enough information about the body of data by asking 2 questions",
+#    message="""vectara provides a way to query a corpus of data.
+#    It will return several answers to your query.
+#    You must use vectara to query the corpus and try to determine what the corpus is about
+#      and you must return the results that seems to make the most sense. """,
+    message= f"""a user will query vectara with the following query: {user_query}
+you must use this query to use vectara and please provide feeback to the user as to how they can produce a better response. 
+If the query is high quality then compliment them on it. Also give the user a sample query that could protentally provide them with a good output""" + user_query, 
    llm_config=llm_config,
 #    llm_config={"api_key": os.environ['OPENAI_API_KEY']}
 )
+
+if __name__ == "__main__":
+#    user_generated_query("What is the overall sentiment in the data?")
+    user_generated_query("What does the document contain pertaining to pets?")
