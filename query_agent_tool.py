@@ -20,9 +20,7 @@ class VectaraQueryTool(BaseTool):
     args_schema: Type[BaseModel] = VectaraQueryToolInput
 
     def _run(self, query:str, corpus_id:int=1):
-        response = vectara_api_call(query, corpus_id)
-        # json_response = response.json()
-        # responses = json_response["response"][0]["response"]
+
         responses = vectara_api_call_get_responses(query, corpus_id)
         return responses
 
