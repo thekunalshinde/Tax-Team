@@ -6,9 +6,9 @@ from query_agent_tool import VectaraQueryTool
 config_list = autogen.config_list_from_json(
     "OAI_CONFIG_LIST",
     filter_dict={
-        # "model": ["gpt-4", "gpt-3.5-turbo", "gpt-3.5-turbo-16k"],
+        "model": ["gpt-4", "gpt-3.5-turbo", "gpt-3.5-turbo-16k"],
         # "model": [ "gpt-3.5-turbo-16k"],
-        "model": "gpt-3.5-turbo",
+        # "model": "gpt-3.5-turbo",
     },
 )
 
