@@ -1,16 +1,30 @@
 import os
 import autogen
 from query_agent_tool import VectaraQueryTool
+from autogen import AssistantAgent, UserProxyAgent, config_list_from_json
 
+
+# config_list = autogen.config_list_from_json(
+#     "OAI_CONFIG_LIST",
+#     filter_dict={
+#         # "model": ["gpt-4", "gpt-3.5-turbo", "gpt-3.5-turbo-16k"],
+#         # "model": [ "gpt-3.5-turbo-16k"],
+#         "model": "gpt-3.5-turbo",
+#         "max_retries": 1,
+#     },
+# )
 
 config_list = autogen.config_list_from_json(
-    "OAI_CONFIG_LIST",
+    env_or_file="OAI_CONFIG_LIST",  # or OAI_CONFIG_LIST.json if file extension is added
     filter_dict={
-        "model": ["gpt-4", "gpt-3.5-turbo", "gpt-3.5-turbo-16k"],
-        # "model": [ "gpt-3.5-turbo-16k"],
-        # "model": "gpt-3.5-turbo",
-    },
+        "model": {
+            "gpt-4",
+            "gpt-3.5-turbo",
+        }
+    }
 )
+
+# config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
 # config_list = autogen.config_list_from_json(
 #     "OAI_CONFIG_LIST",
@@ -88,6 +102,6 @@ assistant = autogen.AssistantAgent(name="assistant", llm_config={"api_key": ...}
 user_proxy.initiate_chat(
    chatbot,
    message="You are tasked with using vectara querying to get enough information about the body of data by asking 4 questions",
-   lm_config=llm_config,
+   llm_config=llm_config,
 #    llm_config={"api_key": os.environ['OPENAI_API_KEY']}
 )
