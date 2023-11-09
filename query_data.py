@@ -117,9 +117,12 @@ def vectara_api_call_get_responses(query:str, corpus_id=1) -> dict:
     response = requests.request("POST", url, headers=headers, data=payload)
     # json_response = response.json()
     json_response = response.json()
-    responses = json_response["response"][0]["response"]
+    responses = json_response['responseSet'][0]['response']
     return responses
 
 if __name__ == '__main__':
-    response = vectara_api_call(query="what does the universe contain")
-    print(response.text)
+    # response = vectara_api_call(query="what does the universe contain")
+    # response = vectara_api_call(query="What is the overall sentiment in the data?")
+    responses = vectara_api_call_get_responses(query="What is the overall sentiment in the data?")
+    print(responses)
+    # print(response.text)
