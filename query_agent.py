@@ -123,7 +123,7 @@ def user_generated_query(user_query):
 #      and you must return the results that seems to make the most sense. """,
     message= f"""a user will query vectara with the following query: {user_query}
 you must use this query to use vectara and please provide feeback to the user as to how they can produce a better response. 
-If the query is high quality then compliment them on it""" + user_query, 
+If the query is high quality then compliment them on it. Also give the user a sample query that could protentally provide them with a good output""" + user_query, 
    llm_config=llm_config,
 #    llm_config={"api_key": os.environ['OPENAI_API_KEY']}
 )
