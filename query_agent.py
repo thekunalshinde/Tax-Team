@@ -1,23 +1,55 @@
 import os
 import autogen
 from query_agent_tool import VectaraQueryTool
+# from autogen import AssistantAgent, UserProxyAgent, config_list_from_json, config_list_from_env
+
 from autogen import AssistantAgent, UserProxyAgent, config_list_from_json
 import streamlit as st
 
 # Define the config_list
 
-config_list = autogen.config_list_from_json(
-    env_or_file="OAI_CONFIG_LIST",  # or OAI_CONFIG_LIST.json if file extension is added
-    filter_dict={
-        "model": {
-            # "gpt-4",
-            # "gpt-3.5-turbo",
-            "gpt-3.5-turbo-16k"
-        }
-    }
-)
+# config_list = autogen.config_list_from_json(
+#     env_or_file="OAI_CONFIG_LIST",  # or OAI_CONFIG_LIST.json if file extension is added
+#     filter_dict={
+#         "model": {
+#             # "gpt-4",
+#             # "gpt-3.5-turbo",
+#             "gpt-3.5-turbo-16k"
+#         }
+#     }
+# )
 
+# config_list = autogen.confi
 
+# config_list = autogen.config_list_from_env()
+
+# config_list = autogen.config_list_from_json(
+#     env_or_file=".env",  # or OAI_CONFIG_LIST.json if file extension is added
+#     filter_dict={
+#         "model": {
+#             # "gpt-4",
+#             # "gpt-3.5-turbo",
+#             "gpt-3.5-turbo-16k"
+#         }
+#     }
+# )
+
+    # llm_config = {
+    #     "request_timeout": 600,
+    #     "config_list": [
+    #         {
+    #             "model": selected_model,
+    #             "api_key": selected_key
+    #         }
+    #     ]
+    # }
+
+selected_model = None
+selected_key = None
+with st.sidebar:
+    st.header("OpenAI Configuration")
+    selected_model = st.selectbox("Model", ['gpt-3.5-turbo', 'gpt-4'], index=1)
+    selected_key = st.text_input("API Key", type="password")
 
 # Define a function to generate llm_config from a LangChain tool
 def generate_llm_config(tool):
@@ -47,9 +79,17 @@ llm_config = {
       generate_llm_config(custom_tool),
 
   ],
-  "config_list": config_list,  # Assuming you have this defined elsewhere
+#   "config_list": config_list,  # Assuming you have this defined elsewhere
   "timeout": 120,
+  "request_timeout": 600,
+        "config_list": [
+            {
+                "model": selected_model,
+                "api_key": selected_key
+            }
+        ]
 }
+openai_api_key = llm_config["config_list"][0]["api_key"]
 
 user_proxy = autogen.UserProxyAgent(
     name="user_proxy",
@@ -105,7 +145,7 @@ If the query is high quality then compliment them on it. Also give the user a sa
 st.title("💬 Chatbot") 
 
 with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    # openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
     "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
