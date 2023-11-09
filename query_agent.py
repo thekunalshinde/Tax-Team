@@ -18,8 +18,9 @@ config_list = autogen.config_list_from_json(
     env_or_file="OAI_CONFIG_LIST",  # or OAI_CONFIG_LIST.json if file extension is added
     filter_dict={
         "model": {
-            "gpt-4",
-            "gpt-3.5-turbo",
+            # "gpt-4",
+            # "gpt-3.5-turbo",
+            "gpt-3.5-turbo-16k"
         }
     }
 )
@@ -101,7 +102,7 @@ chatbot = autogen.AssistantAgent(
 assistant = autogen.AssistantAgent(name="assistant", llm_config={"api_key": ...})
 user_proxy.initiate_chat(
    chatbot,
-   message="You are tasked with using vectara querying to get enough information about the body of data by asking 4 questions",
+   message="You are tasked with using vectara querying to get enough information about the body of data by asking 2 questions",
    llm_config=llm_config,
 #    llm_config={"api_key": os.environ['OPENAI_API_KEY']}
 )
