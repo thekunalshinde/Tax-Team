@@ -2,6 +2,7 @@ import os
 import autogen
 from query_agent_tool import VectaraQueryTool
 from autogen import AssistantAgent, UserProxyAgent, config_list_from_json
+import streamlit as st
 
 # Define the config_list
 
@@ -58,6 +59,14 @@ user_proxy = autogen.UserProxyAgent(
     code_execution_config={"work_dir": "coding"},
 )
 
+user_proxy = autogen.UserProxyAgent(
+    name="user_proxy",
+    # is_termination_msg=lambda x: x.get("content", "") and x.get("content", "").rstrip().endswith("TERMINATE"),
+    is_termination_msg=lambda x: x.get("content", "") and "TERMINATE" in x.get("content", "").rstrip(),
+    human_input_mode="NEVER",
+    max_consecutive_auto_reply=10,
+    code_execution_config={"work_dir": "coding"},
+)
 
 # Register the tool and start the conversation
 user_proxy.register_function(
@@ -68,13 +77,15 @@ user_proxy.register_function(
 
 chatbot = autogen.AssistantAgent(
     name="chatbot",
-    system_message="For coding tasks, only use the functions you have been provided with. Reply TERMINATE when the task is done.",
+    # system_message="For coding tasks, only use the functions you have been provided with. Reply TERMINATE when the task is done.",
+    # system_message="After providing the answer, please reply TERMINATE to end the conversation.",
+    system_message="After providing the answer, please end the conversation. Make sure to include the word TERMINATE in your message.",
     llm_config=llm_config,
 
 )
 
 
-def user_generated_query(user_query):
+def user_generated_query(user_query) -> str:
 
     user_proxy.initiate_chat(
     chatbot,
@@ -84,7 +95,31 @@ If the query is high quality then compliment them on it. Also give the user a sa
    llm_config=llm_config,
 
 )
+    return chatbot.last_message()['content']
 
-if __name__ == "__main__":
-#    user_generated_query("What is the overall sentiment in the data?")
-    user_generated_query("What does the document contain pertaining to pets?")
+# if __name__ == "__main__":
+# #    user_generated_query("What is the overall sentiment in the data?")
+#     data = user_generated_query("What does the document contain pertaining to pets?")
+#     print(data)
+
+st.title("💬 Chatbot") 
+
+with st.sidebar:
+    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
+    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
+    "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
+
+if prompt := st.chat_input():
+    if not openai_api_key:
+        st.info("Please add your OpenAI API key to continue.")
+        st.stop()
+
+    with st.spinner('Processing...'):
+
+        data = user_generated_query(prompt)
+        # msg = response.choices[0].message
+        # msg = data
+        # st.session_state.messages.append(msg)
+        # st.chat_message("assistant").write(msg.content)
+        st.write(data)
