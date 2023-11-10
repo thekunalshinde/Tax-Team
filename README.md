@@ -18,7 +18,7 @@ One of the difficulties of adopting RAG to a mass audience is lack of understand
 - [Table of Contents](#table-of-contents)
 - [Application Deployed](#application-deployed)
 - [Project Demo](#demo)
-- [Screenshots](#screenshots)
+- [Cover](#Cover)
 - [Technology Stack](#technology-stack)
 - [Features](#features)
 - [How to use the app](#how-to-use-the-app)
@@ -36,8 +36,8 @@ https://rag-assistant.streamlit.app/
 
 View the Demo [App](https://storage.googleapis.com/lablab-video-submissions/clnxevogc00003574egffqeo9/raw/submission-video-x-clnxevogc00003574egffqeo9-clorgbu5a000p3j6sk4wfm5ng_hbv2906pg.mp4)
 
-## Screenshots
-![y1](https://github.com/faranbutt/Web-Parser/blob/main/1.jpg)
+## Cover
+![y1](https://github.com/faranbutt/Rag_Assistant_Agent/blob/main/rag-cover.gif)
 
 ## Technology Stack
 
