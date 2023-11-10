@@ -64,16 +64,20 @@ $ git clone https://github.com/faranbutt/Rag_Assistant_Agent
 
 **Step #2**
 
-- To start the frontend, run: `Open index.html`
+- Place your keys inside .env file
+```
+VECTARA_API_KEY=
+VECTARA_CUSTOMER_ID=
+VECTARA_CORPUS_ID=
+YOUTUBE_DATA_API_KEY=
+OPENAI_API_KEY=
+```
+**Step #3**
 
-- For Backend, Install dependencies using: `pip install -r requirements.txt`
-
-- To start the backend, run: `python server/server.py` or `python3 Backend/server/server.py`
-
-- Paste the URL of the website to Scarap
-
-
-
+- Run 
+```bash
+python3 query_data.py
+```
 ## Collaborators
 
 | Name            | Link                                   |
